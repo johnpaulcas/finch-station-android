@@ -81,6 +81,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 
+    // logging
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
     // for recyclerview
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
