@@ -1,11 +1,19 @@
-package com.fitchstation.android
+package com.fitchstation.android.ui
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.view.View
+import com.fitchstation.android.base.BaseActivity
+import com.fitchstation.android.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onBindViewResource(): View? {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun init() {
+
     }
 }
