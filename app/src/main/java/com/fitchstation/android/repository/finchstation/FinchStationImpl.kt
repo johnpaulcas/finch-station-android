@@ -1,4 +1,4 @@
-package com.fitchstation.android.repository.fitchstation
+package com.fitchstation.android.repository.finchstation
 
 /**
  * @author johnpaulcas
@@ -7,7 +7,7 @@ package com.fitchstation.android.repository.fitchstation
  * Repository to handle the api request and save data to database
  * return the result to ViewModel
  *
- * @see FitchStation
+ * @see FinchStation
  */
-class FitchStationImpl: FitchStation {
+class FinchStationImpl: FinchStation {
 }

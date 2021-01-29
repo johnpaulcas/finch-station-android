@@ -1,4 +1,4 @@
-package com.fitchstation.android.ui.fitchstation
+package com.fitchstation.android.ui.finchstation
 
 import android.view.View
 import com.fitchstation.android.R
@@ -8,7 +8,7 @@ import com.fitchstation.android.databinding.FragmentFitchStatonBinding
 /**
  * Created by johnpaulcas on 29/01/2021.
  */
-class FitchStationFragment: BaseFragment(R.layout.fragment_fitch_staton) {
+class FinchStationFragment: BaseFragment(R.layout.fragment_fitch_staton) {
 
     private var fitchStationBinding: FragmentFitchStatonBinding? = null
 
