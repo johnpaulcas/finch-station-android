@@ -5,7 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Created by johnpaulcas on 29/01/2021.
+ * @author johnpaulcas
+ * @since 29/01/2021
  */
 abstract class BaseActivity: AppCompatActivity() {
 

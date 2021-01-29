@@ -5,7 +5,9 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 /**
- * Created by johnpaulcas on 29/01/2021.
+ * @author johnpaulcas
+ * @since 29/01/2021
+ *
  */
 @HiltAndroidApp
 class FitchStationApplication: Application() {

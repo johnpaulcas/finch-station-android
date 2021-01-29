@@ -5,7 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 
 /**
- * Created by johnpaulcas on 29/01/2021.
+ * @author johnpaulcas
+ * @since 29/01/2021
+ *
  */
 abstract class BaseFragment(layoutResourceId: Int): Fragment(layoutResourceId) {
 

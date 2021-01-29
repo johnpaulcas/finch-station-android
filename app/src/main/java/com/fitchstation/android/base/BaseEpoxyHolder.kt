@@ -6,7 +6,8 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 /**
- * Created by johnpaulcas on 29/01/2021.
+ * @author johnpaulcas
+ * @since 29/01/2021
  */
 abstract class BaseEpoxyHolder: EpoxyHolder() {
 
