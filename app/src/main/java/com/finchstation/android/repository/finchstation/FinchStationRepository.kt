@@ -5,5 +5,5 @@ package com.finchstation.android.repository.finchstation
  * @since 29/01/2021
  *
  */
-interface FinchStation {
+interface FinchStationRepository {
 }

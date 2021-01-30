@@ -7,7 +7,7 @@ package com.finchstation.android.repository.finchstation
  * Repository to handle the api request and save data to database
  * return the result to ViewModel
  *
- * @see FinchStation
+ * @see FinchStationRepository
  */
-class FinchStationImpl: FinchStation {
+class FinchStationRepositoryImpl: FinchStationRepository {
 }
