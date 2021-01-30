@@ -1,6 +1,7 @@
 package com.finchstation.android.db
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.finchstation.android.db.dao.FinchStationDao
 import com.finchstation.android.db.dao.FinchStationRouteDao
 import com.finchstation.android.db.dao.FinchStationRouteStopTimeDao
@@ -24,7 +25,7 @@ import com.finchstation.android.db.entities.FinchStationStop
         version = 1,
         exportSchema = false
 )
-abstract class FinchStationDb {
+abstract class FinchStationDb: RoomDatabase() {
 
     abstract fun finchStationDao(): FinchStationDao
 

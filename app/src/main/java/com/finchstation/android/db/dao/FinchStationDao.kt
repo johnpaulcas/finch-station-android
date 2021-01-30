@@ -1,5 +1,6 @@
 package com.finchstation.android.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -21,5 +22,8 @@ interface FinchStationDao {
     suspend fun getFinchStationWithFinchStationStop(
             finchStationName: String?
     ): List<FinchStationWithFinchStationStop>
+
+    @Query("SELECT * FROM finch_station WHERE name=:name ")
+    fun getAll(name: String): LiveData<FinchStation>
 
 }
