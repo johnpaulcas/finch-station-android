@@ -6,9 +6,13 @@ import com.finchstation.android.api.ApiResponse
 import com.finchstation.android.api.finchstation.FinchStationService
 import com.finchstation.android.api.finchstation.response.FinchStationResponse
 import com.finchstation.android.db.dao.FinchStationDao
+import com.finchstation.android.db.dao.FinchStationStopDao
 import com.finchstation.android.db.entities.FinchStation
+import com.finchstation.android.db.relations.FinchStationWithFinchStationTops
 import com.finchstation.android.helpers.NetworkBoundResource
 import com.finchstation.android.helpers.Resource
+import com.finchstation.android.mapper.transferToEntity
+import com.finchstation.android.mapper.transformToEntity
 import timber.log.Timber
 
 /**
@@ -23,23 +27,32 @@ import timber.log.Timber
 class FinchStationRepositoryImpl(
         private val appExecutors: AppExecutors,
         private val finchStationService: FinchStationService,
-        private val finchStationDao: FinchStationDao
+        private val finchStationDao: FinchStationDao,
+        private val finchStationStopDao: FinchStationStopDao
 ): FinchStationRepository {
 
-    override fun loadFinchStation(): LiveData<Resource<FinchStation>> {
-        return object : NetworkBoundResource<FinchStation, FinchStationResponse>(appExecutors) {
+    override fun loadFinchStation(): LiveData<Resource<FinchStationWithFinchStationTops>> {
+        return object : NetworkBoundResource<FinchStationWithFinchStationTops, FinchStationResponse>(appExecutors) {
 
             override fun saveCallResult(item: FinchStationResponse) {
-                Timber.d("Item retrieved $item")
+                val finchStation = item.transformToEntity()
+                finchStationDao.insert(finchStation)
+
+                for (stop in item.finchStationStops!!) {
+                    // save all finchstation stops of db
+                    val finchStationStop = stop.transferToEntity(finchStation.name)
+                    finchStationDao.insertFinchStationStop(finchStationStop)
+                }
             }
 
-            override fun shouldFetch(data: FinchStation?): Boolean {
+            override fun shouldFetch(data: FinchStationWithFinchStationTops?): Boolean {
+                Timber.d("shouldFetch called ${data == null}")
                 return data == null
             }
 
-            override fun loadFromDb(): LiveData<FinchStation> {
+            override fun loadFromDb(): LiveData<FinchStationWithFinchStationTops> {
                 Timber.d("Load data from database")
-                return finchStationDao.getAll("Finch Station")
+                return finchStationDao.getFinchStationWithFinchStationStops("Finch Station")
             }
 
             override fun createCall(): LiveData<ApiResponse<FinchStationResponse>> {
