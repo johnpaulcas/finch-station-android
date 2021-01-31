@@ -2,6 +2,8 @@ package com.finchstation.android.di
 
 import android.app.Application
 import androidx.room.Room
+import com.finchstation.android.AppConstant
+import com.finchstation.android.AppExecutors
 import com.finchstation.android.BuildConfig
 import com.finchstation.android.api.finchstation.FinchStationService
 import com.finchstation.android.db.FinchStationDb
@@ -9,7 +11,10 @@ import com.finchstation.android.db.dao.FinchStationDao
 import com.finchstation.android.db.dao.FinchStationRouteDao
 import com.finchstation.android.db.dao.FinchStationRouteStopTimeDao
 import com.finchstation.android.db.dao.FinchStationStopDao
+import com.finchstation.android.db.entities.FinchStation
 import com.finchstation.android.helpers.LiveDataCallAdapterFactory
+import com.finchstation.android.repository.finchstation.FinchStationRepository
+import com.finchstation.android.repository.finchstation.FinchStationRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,9 +53,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideFinchStationService(okHttpClient: OkHttpClient, baseUrl: String): FinchStationService {
+    fun provideFinchStationService(okHttpClient: OkHttpClient): FinchStationService {
         return Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(AppConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client((okHttpClient))
@@ -88,5 +93,25 @@ object AppModule {
     @Provides
     fun provideFinchStationRouteStopTime(db: FinchStationDb): FinchStationRouteStopTimeDao {
         return db.finchStationRouteStopTimeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFinchStationRepository(
+            apiExecutors: AppExecutors,
+            finchStationService: FinchStationService,
+            finchStationDao: FinchStationDao,
+            finchStationStopDao: FinchStationStopDao,
+            finchStationRouteDao: FinchStationRouteDao,
+            finchStationRouteStopTimeDao: FinchStationRouteStopTimeDao
+    ): FinchStationRepository {
+        return FinchStationRepositoryImpl(
+                apiExecutors,
+                finchStationService,
+                finchStationDao,
+                finchStationStopDao,
+                finchStationRouteDao,
+                finchStationRouteStopTimeDao
+        )
     }
 }

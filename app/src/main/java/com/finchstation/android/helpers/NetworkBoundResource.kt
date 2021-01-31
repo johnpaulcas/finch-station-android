@@ -25,6 +25,7 @@ import com.finchstation.android.api.ApiEmptyResponse
 import com.finchstation.android.api.ApiErrorResponse
 import com.finchstation.android.api.ApiResponse
 import com.finchstation.android.api.ApiSuccessResponse
+import timber.log.Timber
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -42,10 +43,13 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 
     init {
         result.value = Resource.loading(null)
+        Timber.d("calling from network ")
+
         @Suppress("LeakingThis")
         val dbSource = loadFromDb()
         result.addSource(dbSource) { data ->
             result.removeSource(dbSource)
+            Timber.d("shouldFetch here ${shouldFetch(data)}")
             if (shouldFetch(data)) {
                 fetchFromNetwork(dbSource)
             } else {

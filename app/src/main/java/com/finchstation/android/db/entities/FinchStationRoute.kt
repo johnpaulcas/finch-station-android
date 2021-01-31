@@ -17,7 +17,7 @@ import kotlinx.parcelize.Parcelize
 data class FinchStationRoute (
 
     // This will serve as foreign key to Finch Station
-    @ColumnInfo(name="finch_station_key")
+    @ColumnInfo(name="fs_stop_key")
     val finchStationKey: String,
 
     @PrimaryKey(autoGenerate = false)

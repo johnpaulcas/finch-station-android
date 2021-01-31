@@ -8,7 +8,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.finchstation.android.R
 import com.finchstation.android.base.BaseActivity
 import com.finchstation.android.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityScoped
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding

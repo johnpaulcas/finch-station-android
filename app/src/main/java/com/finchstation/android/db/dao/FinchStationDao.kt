@@ -1,11 +1,10 @@
 package com.finchstation.android.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.finchstation.android.db.entities.FinchStation
+import com.finchstation.android.db.entities.FinchStationStop
+import com.finchstation.android.db.relations.FinchStationWithFinchStationTops
 
 /**
  * @author johnpaulcas
@@ -15,15 +14,17 @@ import com.finchstation.android.db.entities.FinchStation
 interface FinchStationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(finchStation: FinchStation)
+    fun insert(finchStation: FinchStation)
 
-//    @Transaction
-//    @Query("SELECT * FROM finch_station WHERE name=:finchStationName")
-//    suspend fun getFinchStationWithFinchStationStop(
-//            finchStationName: String?
-//    ): List<FinchStationWithFinchStationStop>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFinchStationStop(finchStationStop: FinchStationStop)
 
+    @Transaction
     @Query("SELECT * FROM finch_station WHERE name=:name ")
     fun getAll(name: String): LiveData<FinchStation>
+
+    @Transaction
+    @Query("SELECT * FROM finch_station WHERE name=:finchStationName")
+    fun getFinchStationWithFinchStationStops(finchStationName: String): LiveData<FinchStationWithFinchStationTops>
 
 }

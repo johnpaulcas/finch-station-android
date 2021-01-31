@@ -1,8 +1,7 @@
 package com.finchstation.android.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.finchstation.android.db.entities.FinchStationRouteStopTime
 
 /**
@@ -13,6 +12,13 @@ import com.finchstation.android.db.entities.FinchStationRouteStopTime
 interface FinchStationRouteStopTimeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(stopTime: FinchStationRouteStopTime)
+    fun insert(stopTime: FinchStationRouteStopTime)
+
+    @Query("DELETE FROM finch_station_routes_stop_time")
+    fun deleteAll()
+
+    @Transaction
+    @Query("SELECT * FROM finch_station_routes_stop_time WHERE fsr_key=:fsrKey")
+    fun getAllFinchStationRouteStopTimes(fsrKey: String): LiveData<List<FinchStationRouteStopTime>>
 
 }

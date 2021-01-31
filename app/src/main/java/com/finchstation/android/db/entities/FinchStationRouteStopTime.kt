@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 
@@ -18,12 +19,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class FinchStationRouteStopTime (
 
-    // serve as foreign key
-    @ColumnInfo(name = "finch_station_route_key")
+    // serve as foreign key (finch station route)
+    @ColumnInfo(name = "fsr_key")
     var finchStationRouteKey: String,
-
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
 
     @ColumnInfo(name = "service_id")
     val serviceId: Int? = null,
@@ -37,4 +35,8 @@ data class FinchStationRouteStopTime (
     @ColumnInfo(name = "departure_timestamp")
     val departureTimestamp: Int? = null
 
-): Parcelable
+): Parcelable {
+    @IgnoredOnParcel
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0 // auto generated id
+}

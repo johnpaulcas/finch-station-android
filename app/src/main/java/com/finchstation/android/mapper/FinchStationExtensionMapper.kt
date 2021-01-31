@@ -26,7 +26,7 @@ fun FinchStationResponse.transformToEntity(): FinchStation {
     )
 }
 
-fun FinchStationStop.transferToEntity(
+fun FinchStationStop.transformToEntity(
         foreignKey: String
 ): com.finchstation.android.db.entities.FinchStationStop {
     return com.finchstation.android.db.entities.FinchStationStop(
@@ -37,7 +37,7 @@ fun FinchStationStop.transferToEntity(
     )
 }
 
-fun Route.transferToEntity(foreignKey: String): FinchStationRoute {
+fun Route.transformToEntity(foreignKey: String): FinchStationRoute {
     return FinchStationRoute(
             finchStationKey = foreignKey,
             this.name,
@@ -45,7 +45,7 @@ fun Route.transferToEntity(foreignKey: String): FinchStationRoute {
     )
 }
 
-fun RouteStopTime.transferToEnity(foreignKey: String): FinchStationRouteStopTime {
+fun RouteStopTime.transformToEntity(foreignKey: String): FinchStationRouteStopTime {
     return FinchStationRouteStopTime(
             finchStationRouteKey = foreignKey,
             this.serviceId,
