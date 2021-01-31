@@ -7,9 +7,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
-//kapt {
-//    correctErrorTypes = true
-//}
+kapt {
+    correctErrorTypes = true
+}
 
 android {
     compileSdkVersion 30
