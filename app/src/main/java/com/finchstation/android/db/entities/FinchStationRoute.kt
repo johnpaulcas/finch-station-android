@@ -1,9 +1,7 @@
 package com.finchstation.android.db.entities
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
@@ -20,26 +18,12 @@ data class FinchStationRoute (
 
     // This will serve as foreign key to Finch Station
     @ColumnInfo(name="finch_station_key")
-    var finchStationKey: String,
+    val finchStationKey: String,
 
-    @SerializedName("name")
-    @Expose
     @PrimaryKey(autoGenerate = false)
-    val name: String? = null,
+    val name: String,
 
-    @SerializedName("uri")
-    @Expose
     @ColumnInfo(name = "uri")
     val uri: String? = null,
-
-    @SerializedName("stop_times")
-    @Expose
-    @ColumnInfo(name = "finch_station_route_stop_times")
-    val finchStationRouteStopTimes: List<FinchStationRouteStopTime?>? = null,
-
-    @SerializedName("route_group_id")
-    @Expose
-    @ColumnInfo(name = "route_group_id")
-    val routeGroupId: String? = null
 
 ): Parcelable

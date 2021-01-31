@@ -1,7 +1,6 @@
 package com.finchstation.android.db.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
@@ -14,21 +13,13 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "finch_station")
 data class FinchStation(
 
-        @SerializedName("name")
-        @Expose
-        @PrimaryKey(autoGenerate = false)
-        private val name: String? = null,
+    @PrimaryKey(autoGenerate = false)
+    val name: String,
 
-        @SerializedName("time")
-        @Expose
-        private val time: Int? = null,
+    @ColumnInfo(name = "time")
+    val time: Int? = null,
 
-        @SerializedName("stops")
-        @Expose
-        private val stops: List<FinchStationStop>? = null,
-
-        @SerializedName("uri")
-        @Expose
-        private val uri: String? = null
+    @ColumnInfo(name="uri")
+    val uri: String? = null
 
 )

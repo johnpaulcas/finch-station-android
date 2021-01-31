@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.finchstation.android.db.entities.FinchStation
-import com.finchstation.android.db.relations.FinchStationWithFinchStationStop
 
 /**
  * @author johnpaulcas
@@ -18,10 +17,11 @@ interface FinchStationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(finchStation: FinchStation)
 
-    @Query("SELECT * FROM finch_station WHERE name=:finchStationName")
-    suspend fun getFinchStationWithFinchStationStop(
-            finchStationName: String?
-    ): List<FinchStationWithFinchStationStop>
+//    @Transaction
+//    @Query("SELECT * FROM finch_station WHERE name=:finchStationName")
+//    suspend fun getFinchStationWithFinchStationStop(
+//            finchStationName: String?
+//    ): List<FinchStationWithFinchStationStop>
 
     @Query("SELECT * FROM finch_station WHERE name=:name ")
     fun getAll(name: String): LiveData<FinchStation>

@@ -25,23 +25,15 @@ data class FinchStationRouteStopTime (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    @SerializedName("service_id")
-    @Expose
     @ColumnInfo(name = "service_id")
     val serviceId: Int? = null,
 
-    @SerializedName("shape")
-    @Expose
     @ColumnInfo(name = "shape")
     val shape: String? = null,
 
-    @SerializedName("departure_time")
-    @Expose
     @ColumnInfo(name = "departure_time")
     val departureTime: String? = null,
 
-    @SerializedName("departure_timestamp")
-    @Expose
     @ColumnInfo(name = "departure_timestamp")
     val departureTimestamp: Int? = null
 
