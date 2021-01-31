@@ -1,6 +1,8 @@
-package com.finchstation.android.api
+package com.finchstation.android.api.finchstation
 
 import androidx.lifecycle.LiveData
+import com.finchstation.android.api.ApiResponse
+import com.finchstation.android.api.finchstation.response.FinchStationResponse
 import com.finchstation.android.db.entities.FinchStation
 import retrofit2.http.GET
 
@@ -11,6 +13,6 @@ import retrofit2.http.GET
 interface FinchStationService {
 
     @GET("/finch_station.json")
-    fun getFinchStation(): LiveData<ApiResponse<FinchStation>>
+    fun getFinchStation(): LiveData<ApiResponse<FinchStationResponse>>
 
 }
