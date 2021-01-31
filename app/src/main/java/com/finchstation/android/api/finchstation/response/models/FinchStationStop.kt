@@ -12,7 +12,7 @@ data class FinchStationStop (
 
     @SerializedName("name")
     @Expose
-    val name: String? = null,
+    val name: String,
 
     @SerializedName("uri")
     @Expose

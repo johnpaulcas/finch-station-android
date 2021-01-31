@@ -16,18 +16,18 @@ data class FinchStationResponse (
 
     @SerializedName("name")
     @Expose
-    private val name: String? = null,
+    val name: String,
 
     @SerializedName("time")
     @Expose
-    private val time: Int? = null,
+    val time: Int? = null,
 
     @SerializedName("stops")
     @Expose
-    private val finchStationStops: List<FinchStationStop>? = null,
+    val finchStationStops: List<FinchStationStop>? = null,
 
     @SerializedName("uri")
     @Expose
-    private val uri: String? = null
+    val uri: String? = null
 
 )
