@@ -1,6 +1,15 @@
 package com.finchstation.android.di
 
+import android.app.Application
+import androidx.room.Room
 import com.finchstation.android.BuildConfig
+import com.finchstation.android.api.finchstation.FinchStationService
+import com.finchstation.android.db.FinchStationDb
+import com.finchstation.android.db.dao.FinchStationDao
+import com.finchstation.android.db.dao.FinchStationRouteDao
+import com.finchstation.android.db.dao.FinchStationRouteStopTimeDao
+import com.finchstation.android.db.dao.FinchStationStopDao
+import com.finchstation.android.helpers.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,12 +48,45 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+    fun provideFinchStationService(okHttpClient: OkHttpClient, baseUrl: String): FinchStationService {
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client((okHttpClient))
                 .build()
+                .create(FinchStationService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideFinchStationDb(
+            app: Application
+    ) = Room.databaseBuilder(app, FinchStationDb::class.java, "finchstation_database")
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideFinchStationDao(db: FinchStationDb): FinchStationDao {
+        return db.finchStationDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFinchStationStopDao(db: FinchStationDb): FinchStationStopDao {
+        return db.finchStationStopDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFinchStationRouteDao(db: FinchStationDb): FinchStationRouteDao {
+        return db.finchStationRouteDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFinchStationRouteStopTime(db: FinchStationDb): FinchStationRouteStopTimeDao {
+        return db.finchStationRouteStopTimeDao()
+    }
 }
