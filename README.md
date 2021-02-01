@@ -1,8 +1,6 @@
 # Fitch Station App
 A simple routing android application showing the data from 
-[finch_station.json](https://myttc.ca/finch_station.json)
-
-Dowload the app [here](https://drive.google.com/file/d/1C3SMPdQ0VkZHp83V0hb_JuNStUM6X1O_/view?usp=sharing)!
+[finch_station.json](https://myttc.ca/finch_station.json), Dowload the app [here](https://drive.google.com/file/d/1C3SMPdQ0VkZHp83V0hb_JuNStUM6X1O_/view?usp=sharing)!
 
 # Objective
 - App must be developed natively, use third-party libraries for this assignment
@@ -21,7 +19,7 @@ Each component depends only on the component one level below it. For example, ac
 This design creates a consistent and pleasant user experience. Regardless of whether the user comes back to the app several minutes after they've last closed it or several days later, they instantly see the information that the app persists locally. If this data is stale, the app's repository module starts updating the data in the background.
 ![MVVM](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/mvvm.png) 
 
-# Overview API call and app caching
+# Overview api call and data caching
 This is base on google recommended architecture, more reading and reference can be found [here](https://developer.android.com/jetpack/guide#addendum)
 ![MVVM](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/networkbounce.png) 
 
