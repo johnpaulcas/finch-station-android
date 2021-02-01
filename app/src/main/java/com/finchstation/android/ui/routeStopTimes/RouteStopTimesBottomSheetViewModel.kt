@@ -6,8 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.finchstation.android.db.dao.FinchStationRouteDao
 import com.finchstation.android.db.entities.FinchStationRoute
 import com.finchstation.android.db.entities.FinchStationStop
+import com.finchstation.android.db.relations.FinchStationRouteWithFinchStationStopTimes
 import com.finchstation.android.ui.routes.RoutesViewModel
 import dagger.hilt.android.scopes.FragmentScoped
 import timber.log.Timber
@@ -17,8 +19,9 @@ import timber.log.Timber
  * @since 01/02/2021
  */
 @FragmentScoped
-class RouteStopTimesBottomViewModel @ViewModelInject constructor(
+class RouteStopTimesBottomSheetViewModel @ViewModelInject constructor(
     @Assisted private val state: SavedStateHandle,
+    private val routeStopTimesDao: FinchStationRouteDao
 ): ViewModel() {
 
     private val _finchStationStop = MutableLiveData<FinchStationStop>()
@@ -29,6 +32,11 @@ class RouteStopTimesBottomViewModel @ViewModelInject constructor(
 
     val finchStationRoute: LiveData<FinchStationRoute>
         get() = _finchStationRoute
+
+    val routeWithStopTimes: LiveData<FinchStationRouteWithFinchStationStopTimes>
+        get() = routeStopTimesDao.getFinchStationRouteWithFinchStationStopTimes(
+            state.get<FinchStationRoute>(FINCH_STOP_ROUTE)!!.name
+        )
 
     companion object {
         const val FINCH_STATION_STOP = "finchStationStop"

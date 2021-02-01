@@ -1,25 +1,18 @@
 package com.finchstation.android.ui.routeStopTimes
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.doOnLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.finchstation.android.R
 import com.finchstation.android.databinding.FragmentRouteStopTimesBinding
 import com.finchstation.android.db.entities.FinchStationRoute
+import com.finchstation.android.db.entities.FinchStationRouteStopTime
 import com.finchstation.android.db.entities.FinchStationStop
 import com.finchstation.android.ui.components.finchStationStopViewHolder
+import com.finchstation.android.ui.components.routeStopTimeViewHolder
 import com.finchstation.android.ui.components.stopRouteViewHolder
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -29,13 +22,15 @@ import timber.log.Timber
  * @since 01/02/2021
  */
 @AndroidEntryPoint
-class RouteStopTimesBottomFragment: BottomSheetDialogFragment() {
+class RouteStopTimesBottomSheetFragment: BottomSheetDialogFragment() {
 
-    private val viewModel: RouteStopTimesBottomViewModel by viewModels()
+    private val sheetViewModel: RouteStopTimesBottomSheetViewModel by viewModels()
     private var routeStopTimeBinding: FragmentRouteStopTimesBinding? = null
 
     private var finchStationStop: FinchStationStop? = null
     private var finchStationRoute: FinchStationRoute? = null
+
+    private var routeStopTimes = mutableListOf<FinchStationRouteStopTime>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,9 +69,26 @@ class RouteStopTimesBottomFragment: BottomSheetDialogFragment() {
                     finchStationRoute(it)
                 }
             }
+
+            // load stop times
+            routeStopTimes.map {
+                routeStopTimeViewHolder {
+                    id(it.id)
+                    context(requireContext())
+                    routeStopTimes(it)
+                }
+            }
         }
 
-        viewModel.finchStationRoute.observe(viewLifecycleOwner, Observer { fsr ->
+        routeStopTimeBinding?.ivClose?.setOnClickListener {
+            dismiss()
+        }
+
+        observer()
+    }
+
+    private fun observer() {
+        sheetViewModel.finchStationRoute.observe(viewLifecycleOwner, Observer { fsr ->
             fsr?.let {
                 finchStationRoute = it
                 Timber.d("observe $it")
@@ -84,7 +96,7 @@ class RouteStopTimesBottomFragment: BottomSheetDialogFragment() {
             }
         })
 
-        viewModel.finchStationStop.observe(viewLifecycleOwner, Observer { fst ->
+        sheetViewModel.finchStationStop.observe(viewLifecycleOwner, Observer { fst ->
             fst?.let {
                 finchStationStop = it
                 Timber.d("observe $it")
@@ -92,6 +104,12 @@ class RouteStopTimesBottomFragment: BottomSheetDialogFragment() {
             }
         })
 
+        sheetViewModel.routeWithStopTimes.observe(viewLifecycleOwner, Observer { data ->
+            data?.let {
+                routeStopTimes = it.finchStationStopTimes.toMutableList()
+                routeStopTimeBinding?.ercRouteStopTimes?.requestModelBuild()
+            }
+        })
     }
 
     override fun onDestroyView() {
