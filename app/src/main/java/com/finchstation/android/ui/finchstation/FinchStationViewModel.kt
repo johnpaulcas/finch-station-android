@@ -19,7 +19,6 @@ class FinchStationViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     fun loadData(): LiveData<Resource<FinchStationWithFinchStationTops>> {
-        // sanity check
         return finchStationRepository.loadFinchStation()
     }
 
