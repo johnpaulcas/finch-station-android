@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/finchStationFragment">
 
     <fragment
         android:id="@+id/finchStationFragment"
         android:name="com.finchstation.android.ui.finchstation.FinchStationFragment"
-        android:label="FinchStationFragment" />
+        android:label="Finch Station" >
+        <action
+            android:id="@+id/action_finchStationFragment_to_routesFragment"
+            app:destination="@id/routesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/routesFragment"
+        android:name="com.finchstation.android.ui.routes.RoutesFragment"
+        android:label="Routes"
+        tools:layout="@layout/fragment_routes" >
+        <argument
+            android:name="finchStationStop"
+            app:argType="com.finchstation.android.db.entities.FinchStationStop"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_routesFragment_to_routeStopTimesBottomFragment"
+            app:destination="@id/routeStopTimesBottomFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/routeStopTimesBottomFragment"
+        android:name="com.finchstation.android.ui.routeStopTimes.RouteStopTimesBottomSheetFragment"
+        android:label="Route Stop Times"
+        tools:layout="@layout/fragment_route_stop_times" >
+        <argument
+            android:name="finchStationStop"
+            app:argType="com.finchstation.android.db.entities.FinchStationStop"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="finchStopRoute"
+            app:argType="com.finchstation.android.db.entities.FinchStationRoute"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
 </navigation>
