@@ -11,7 +11,6 @@ import com.finchstation.android.db.dao.FinchStationDao
 import com.finchstation.android.db.dao.FinchStationRouteDao
 import com.finchstation.android.db.dao.FinchStationRouteStopTimeDao
 import com.finchstation.android.db.dao.FinchStationStopDao
-import com.finchstation.android.db.entities.FinchStationStop
 import com.finchstation.android.db.relations.FinchStationWithFinchStationTops
 import com.finchstation.android.helpers.NetworkBoundResource
 import com.finchstation.android.helpers.Resource
@@ -36,6 +35,7 @@ class FinchStationRepositoryImpl(
         private val finchStationRouteStopTimeDao: FinchStationRouteStopTimeDao
 ): FinchStationRepository {
 
+
     override fun loadFinchStation(): LiveData<Resource<FinchStationWithFinchStationTops>> {
         return object : NetworkBoundResource<FinchStationWithFinchStationTops, FinchStationResponse>(appExecutors) {
 
@@ -43,23 +43,24 @@ class FinchStationRepositoryImpl(
                 val finchStation = item.transformToEntity()
                 finchStationDao.insert(finchStation)
 
+                // delete all routes stop times before looping
+                finchStationRouteStopTimeDao.deleteAll()
+
+                // save all data
                 item.finchStationStops?.let { finchStationStops ->
                     saveFinchStationStops(finchStation.name, finchStationStops)
                 }
             }
 
             override fun shouldFetch(data: FinchStationWithFinchStationTops?): Boolean {
-                Timber.d("shouldFetch called ${data == null}")
                 return data == null
             }
 
             override fun loadFromDb(): LiveData<FinchStationWithFinchStationTops> {
-                Timber.d("Load data from database")
                 return finchStationDao.getFinchStationWithFinchStationStops("Finch Station")
             }
 
             override fun createCall(): LiveData<ApiResponse<FinchStationResponse>> {
-                Timber.d("Requesting the data from api")
                 return finchStationService.getFinchStation()
             }
 
@@ -98,8 +99,6 @@ class FinchStationRepositoryImpl(
         finchStationRoutes?.let { finchStationRoutes ->
             // make sure not to execute the loop when list is empty
             if (finchStationRoutes.isNotEmpty()) {
-                // delete all routes stop times before looping
-                finchStationRouteStopTimeDao.deleteAll()
 
                 for (stopRoute in finchStationRoutes) {
                     val sr = stopRoute.transformToEntity(pk)
@@ -127,6 +126,7 @@ class FinchStationRepositoryImpl(
             if (routeStopTimes.isNotEmpty()) {
                 // don't execute the loop if routeStopTimes is empty
                 for (routeStopTime in routeStopTimes) {
+                    Timber.d("Called ...")
                     val rst = routeStopTime.transformToEntity(pk)
                     finchStationRouteDao.insertRouteTimeStop(rst)
                 }
