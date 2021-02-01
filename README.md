@@ -24,14 +24,7 @@ This is base on google recommended architecture, more reading and reference can 
 ![MVVM](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/networkbounce.png) 
 
 # Screenshots
-### Home/FinchStation Stops
-![Home](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/1.jpg) 
-### FinchStation Stop Routes
-![Routes](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/2.jpg) 
-### FinchStation Stop No Route/s
-![EmptyRoutes](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/1.jpg) 
-### FinchStation RouteTimeStop
-![RouteTimeStop](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/1.jpg) 
+![Home](https://github.com/johnpaulcas/finch-station-android/blob/main/screenshots/app.png) 
 
 # Resource/s
 - https://developer.android.com/jetpack
