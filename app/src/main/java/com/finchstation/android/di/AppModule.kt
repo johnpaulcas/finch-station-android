@@ -15,6 +15,10 @@ import com.finchstation.android.db.entities.FinchStation
 import com.finchstation.android.helpers.LiveDataCallAdapterFactory
 import com.finchstation.android.repository.finchstation.FinchStationRepository
 import com.finchstation.android.repository.finchstation.FinchStationRepositoryImpl
+import com.finchstation.android.repository.routeStopTimes.RouteStopTimesRepository
+import com.finchstation.android.repository.routeStopTimes.RouteStopTimesRepositoryImpl
+import com.finchstation.android.repository.routes.RoutesRepository
+import com.finchstation.android.repository.routes.RoutesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +37,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object AppModule {
+
+    // retrofit
 
     @Singleton
     @Provides
@@ -62,6 +68,8 @@ object AppModule {
                 .build()
                 .create(FinchStationService::class.java)
     }
+
+    // database
 
     @Singleton
     @Provides
@@ -95,6 +103,8 @@ object AppModule {
         return db.finchStationRouteStopTimeDao()
     }
 
+    // repositories
+
     @Singleton
     @Provides
     fun provideFinchStationRepository(
@@ -114,4 +124,21 @@ object AppModule {
                 finchStationRouteStopTimeDao
         )
     }
+
+    @Singleton
+    @Provides
+    fun provideRoutesRepository(
+        finchStationStopDao: FinchStationStopDao
+    ): RoutesRepository {
+        return RoutesRepositoryImpl(finchStationStopDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRouteStopTimesRepository(
+        finchStationRouteDao: FinchStationRouteDao
+    ): RouteStopTimesRepository {
+        return RouteStopTimesRepositoryImpl(finchStationRouteDao)
+    }
+
 }
